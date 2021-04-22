@@ -1,0 +1,44 @@
+void List::listar() {
+        Node* aux = head;
+        while (aux != 0){
+            cout << "pevent is " << pevent << endl;
+            pevent -> printEvent();
+            aux = aux->getNext();
+        }
+
+
+SELECT BY DATE RANGE:
+
+in event.cpp
+    if( hr1 >= timeDate.tempo.hr && min1 >= timeDate.tempo.min && sec1 >= timeDate.tempo.sec1 && dy1 >= timeDate.data.day && mn1 >= timeDate.data.mo && yr1 >= timeDate.data.yr && hr1 <= timeDate.tempo.hr && min1 <= timeDate.tempo.min && sec1 <= timeDate.tempo.sec1 && dy1 <= timeDate.data.day && mn1 <= timeDate.data.mo && yr1 <= timeDate.data.yr)
+        
+        cout << eventCodes.codes.hottub_code1 << " " << timeDate.tempo.hr << ":" << timeDate.tempo.min << ":" << timeDate.tempo.sec << "  "<< timeDate.data.day << "/" << timeDate.data.mo << "/" << timeDate.data.yr << " " << eventCodes.codes.stop_flag1 << " " << eventCodes.codes.start_flag1 << " " << eventCodes.codes.event_flag1 << endl;
+
+in main.cpp
+    int hr1 = 16; int min1 = 30; int sec1 = 00; int dy1 = 25; int mn1 = 5; int yr1 = 16;
+    
+     int hr2 = 17; int min2 = 00; int sec2 = 00; int dy2 = 25; int mn2 = 5; int yr2 = 16;
+    list1.listar();
+    list1.listWithRange(&hr1, &min1, &sec1, &dy1, &mn1, &yr1, &hr2, &min2, &sec2, &dy2, &mn2, &yr2);
+
+in List.cpp
+
+void List::listWithRange(&hr1, &min1, &sec1, &dy1, &mn1, &yr1, &hr2, &min2, &sec2, &dy2, &mn2, &yr2)
+{
+    Node* temp = head; // returns everytime and gets head
+    Event* pevent;
+    
+    if(head == 0)
+        cout << "List is empty" << endl;
+    else
+    {
+        
+        while(temp != 0)
+        {
+            pevent = temp->getData();
+            pevent -> selectByDateRange(&hr1, &min1, &sec1, &dy1, &mn1, &yr1, &hr2, &min2, &sec2, &dy2, &mn2, &yr2);
+            temp = temp->getNext();
+            cout << "temp is " << temp << endl;
+        }
+        delete temp;
+        delete pevent;
