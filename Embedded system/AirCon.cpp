@@ -11,7 +11,7 @@
 AirCon::AirCon()
 {
     // We enter here from main and then use this constructor to enter initial state
-    cout << "we're in aircon" << endl;
+    //cout << "we're in aircon" << endl;
     currentState = &Idle::getInstance(); // Set initial state to Idle
     currentState->enter(this);
 }

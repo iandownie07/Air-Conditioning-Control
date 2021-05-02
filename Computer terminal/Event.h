@@ -71,6 +71,6 @@ public:
     void printEvent();
     void selectByDateRange(int*, int*, int*, int*, int*, int*);
     void selectByTimeOfDay(int);
-    void calculateTotalHeaterUse(Event* pevent,  int* yr1, int* mn1, int* dy1, int* yr2, int* mn2, int* dy2, int);
+    void calculateTotalAirConUse(Event* pevent,  int* yr1, int* mn1, int* dy1, int* yr2, int* mn2, int* dy2, int);
 };
 #endif /* Event_h */

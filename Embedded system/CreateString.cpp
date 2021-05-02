@@ -30,6 +30,8 @@ void Packet::makePacket()
         event_flag = '1';
     if (eventtype_flag == 2)
         event_flag = '2';
+    if (eventtype_flag == 3)
+        event_flag = '3';
     
     
     

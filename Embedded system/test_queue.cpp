@@ -42,12 +42,15 @@ int main(int argc, char* argv[]) {
   cout << endl << "-------------" << endl;
   cout << endl << "tamanho = " << fila1.getLength() << endl;
 
+    
+    pint = *(string*)fila1.getHead();
+    cout << pint << endl;
   // Remove the values from the queue and print them:
   cout << endl << endl;
-  while(fila1.isEmpty() == 0) {
+  /*while(fila1.isEmpty() == 0) {
     pint = *(string*)fila1.remove();
     cout << pint << endl;
       cout << fila1.isEmpty() << endl;
   }
-
+*/
 }

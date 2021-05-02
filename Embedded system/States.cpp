@@ -14,6 +14,7 @@
 #include "CreateString.cpp"
 #include "queue.cpp"
 #include "ClockTime.cpp"
+#include  <string.h>
 
 
 #define UART_ID uart0
@@ -99,17 +100,17 @@ void core1_interrupt_handler(uint gpio, uint32_t events)
         {
             if(state_flag == 1) // so as only capture button presses in idle
             {
-            // create button-press event for log
-            Packet pack;
-            int h = ti.hr; int m = ti.min; int s = ti.seg;
-            int dy = d.day; int mn = d.mo; int y = d.yr;
-            string output;
-            eventtype_flag = 2; // event 2 is a button press
-            pack.setEvent(eventtype_flag);
-            pack.setEventTime(h, m, s, dy, mn, y);
-            pack.makePacket();
-            output = pack.getPacket();
-            queue1.insert(new string(output));
+                // create button-press event for log
+                Packet pack;
+                int h = ti.hr; int m = ti.min; int s = ti.seg;
+                int dy = d.day; int mn = d.mo; int y = d.yr;
+                string output;
+                eventtype_flag = 2; // event 2 is a button press
+                pack.setEvent(eventtype_flag);
+                pack.setEventTime(h, m, s, dy, mn, y);
+                pack.makePacket();
+                output = pack.getPacket();
+                queue1.insert(new string(output));
             }
             if(gpio_get(15) && gpio_get(10))
                 connect_flag = true;
@@ -148,7 +149,7 @@ void core1_entry()
             ++d;
         }
         ++ti;
-       // cout << ti << " " << d << endl;
+        // cout << ti << " " << d << endl;
     }
 }
 
@@ -164,16 +165,16 @@ void Idle::enter(AirCon* p_air)
     // create disconnect event for log
     if(connect_flag == false)
     { // so as not to create event when system starts
-    Packet pack;
-    int h = ti.hr; int m = ti.min; int s = ti.seg;
-    int dy = d.day; int mn = d.mo; int y = d.yr;
-    string output;
-    eventtype_flag = 1; // event 1 is a disconnection
-    pack.setEvent(eventtype_flag);
-    pack.setEventTime(h, m, s, dy, mn, y);
-    pack.makePacket();
-    output = pack.getPacket();
-    queue1.insert(new string(output));
+        Packet pack;
+        int h = ti.hr; int m = ti.min; int s = ti.seg;
+        int dy = d.day; int mn = d.mo; int y = d.yr;
+        string output;
+        eventtype_flag = 1; // event 1 is a disconnection
+        pack.setEvent(eventtype_flag);
+        pack.setEventTime(h, m, s, dy, mn, y);
+        pack.makePacket();
+        output = pack.getPacket();
+        queue1.insert(new string(output));
     }
     while (!gpio_get(15) || !gpio_get(10) || connect_flag == false)
     {
@@ -183,18 +184,18 @@ void Idle::enter(AirCon* p_air)
             gpio_put(17, 0); // disconnect LED when window & door are closed
         // tight_loop_contents();
         /*
-        //cout << "We're in idle" << endl;
-        if(gpio_get(15))
-            cout << "door is closed" << endl;
-        if(gpio_get(10))
-            cout << "window is closed" << endl;
-        if(gpio_get(12))
-            cout << "door is transmitting" << endl;
-        if(gpio_get(3))
-            cout << "window is transmitting" << endl;
-        if(gpio_get(17))
-            cout << "LED is on" << endl;
-        cout << "Connect flag is " << connect_flag << endl;*/
+         //cout << "We're in idle" << endl;
+         if(gpio_get(15))
+         cout << "door is closed" << endl;
+         if(gpio_get(10))
+         cout << "window is closed" << endl;
+         if(gpio_get(12))
+         cout << "door is transmitting" << endl;
+         if(gpio_get(3))
+         cout << "window is transmitting" << endl;
+         if(gpio_get(17))
+         cout << "LED is on" << endl;
+         cout << "Connect flag is " << connect_flag << endl;*/
         sleep_ms(3000);
         
     } // we leave infinite loop if door & window are closed &
@@ -236,23 +237,23 @@ void Cooling::enter(AirCon* p_air)
         // create cooling-start event for log
         //cout << "We're creating a cooling event" << endl;
         Packet pack;
+        eventtype_flag = 3;
         int h = ti.hr; int m = ti.min; int s = ti.seg;
         int dy = d.day; int mn = d.mo; int y = d.yr;
         string output;
-        eventtype_flag = 3; // event 3 is a cooling start
+        // event 3 is a cooling start
         pack.setEvent(eventtype_flag);
         pack.setEventTime(h, m, s, dy, mn, y);
         pack.makePacket();
         output = pack.getPacket();
         queue1.insert(new string(output));
-        cout << output << endl;
     }
     while (gpio_get(15) && gpio_get(10)) {
         //  tight_loop_contents(); // while door and window are closed, keep cooling
-      /*  if(gpio_get(15))
-            cout << "door is closed" << endl;
-        if(gpio_get(10))
-            cout << "window is closed" << endl;*/
+        /*  if(gpio_get(15))
+         cout << "door is closed" << endl;
+         if(gpio_get(10))
+         cout << "window is closed" << endl;*/
         sleep_ms(3000);
     }
     gpio_put(22, 0); // turn off relay

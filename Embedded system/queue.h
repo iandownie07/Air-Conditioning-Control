@@ -27,7 +27,7 @@ class Queue {
     Link* prev; // each struct link contains pointers to
     Link* next;
     Link(void* dat, Link* prv, Link* nxt); // inside the class Queue we have
-    ~Link();                         // a structure Link the contains func Link
+    ~Link();                         // a structure Link that contains func Link
   } *head, *tail;                   // when we create an element, there's a
   int length;                      // pointer to the data and the neighbouring
 public:                           // elements

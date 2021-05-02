@@ -6,7 +6,7 @@
 #include <iostream>
 
 using namespace std;
- int count = 0;
+ int listcount = 0;
 int length = 0;
 List::List() {
    head = 0;
@@ -25,7 +25,8 @@ List::~List() {
 
 void List::insertBeforeFirst(Event* dat) {
   head = new Node(dat, head);
-    count++;
+    listcount++;
+        //cout << "listcount in insert is " << listcount << endl;
 }
 
 void List::insertAfterLast(Event* dat) {
@@ -163,7 +164,7 @@ void List::listWithRange(int* yr1, int* mn1, int* dy1, int* yr2,int* mn2, int* d
 {
     Node* temp = head; // returns everytime and gets head
     Event* pevent;
-    int length = count;
+    int length = listcount;
     if(head == 0)
         cout << "List is empty" << endl;
     else
@@ -188,7 +189,7 @@ void List::demandByTimeOfDay()
 {
     Node* temp = head;
     Event* pevent;
-    int length = count;
+    int length = listcount;
     if(head == 0)
         cout << "List is empty" << endl;
     else
@@ -209,11 +210,11 @@ void List::demandByTimeOfDay()
     }
 }
 
-void List::totalHeaterUse(int* yr1, int* mn1, int* dy1, int* yr2,int* mn2, int* dy2)
+void List::totalAirConUse(int* yr1, int* mn1, int* dy1, int* yr2,int* mn2, int* dy2)
 {
     Node* temp = head;
     Event* pevent;
-    int length = count;
+    int length = listcount;
     if(head == 0)
         cout << "List is empty" << endl;
     else
@@ -224,8 +225,9 @@ void List::totalHeaterUse(int* yr1, int* mn1, int* dy1, int* yr2,int* mn2, int* 
             pevent = temp->getData();
             //cout << "temp is " << temp << endl;
             //cout << "pevent is" << pevent << endl;
+            //cout << "length in list is " << length << endl;
             length--;
-            pevent -> calculateTotalHeaterUse(pevent, yr1, mn1, dy1, yr2, mn2, dy2, length);
+            pevent -> calculateTotalAirConUse(pevent, yr1, mn1, dy1, yr2, mn2, dy2, length);
             temp = temp->getNext();
             //cout << "temp is " << temp << endl;
         }

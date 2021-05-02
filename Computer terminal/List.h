@@ -45,7 +45,7 @@ public:
   void listar();
  void listWithRange(int*, int*, int*, int*, int*, int*);
     void demandByTimeOfDay();
-void totalHeaterUse(int*, int*, int*, int*, int*, int*);
+void totalAirConUse(int*, int*, int*, int*, int*, int*);
 };
 
 #endif /* List_h */
