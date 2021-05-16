@@ -12,6 +12,8 @@
 
 using namespace std;
 
+
+// sets for times and codes
 void Clock::setClock(int h, int m, int s)
 {
     tempo.hr = h;
@@ -34,7 +36,7 @@ void Codes::setCodes(int nhottub_code,  int nevent_flag, string nperiod_of_day, 
     codes.event_index = nevent_index;
 }
 
-
+//General print method for event table
 void Event::printEvent()
 {
     static volatile bool header_index = true;
@@ -53,20 +55,24 @@ void Event::printEvent()
     cout << eventCodes.codes.hottub_code1 << "          " << timeDate.tempo.hr << ":" << timeDate.tempo.min << ":" << timeDate.tempo.sec << "     "<< timeDate.data.day << "/" << timeDate.data.mo << "/" << timeDate.data.yr << "         " << eventCodes.codes.event_flag1 << "           " << eventCodes.codes.period_of_day << endl;
 }
 
+// Select event by date
 void Event::selectByDateRange(int* yr1, int* mn1, int* dy1, int* yr2, int* mn2, int* dy2)
 {
+    // Filter by day
     if((*yr1 == *yr2) && (*mn1 == *mn2) && (*dy1 <= timeDate.data.day && timeDate.data.day <= *dy2))
     {
         //cout << timeDate.data.day << " day added" << endl;
         printEvent();
     }
     
+    // Filter by month
     else if ((*yr1 == *yr2) && (*mn1 <= timeDate.data.mo && timeDate.data.mo <= *mn2))
     {
         //cout << timeDate.data.mo << " month added" << endl;
         printEvent();
     }
     
+    // Filter by year
     else if(*yr1 <= timeDate.data.yr && timeDate.data.yr <= *yr2 && *yr1 < *yr2)
     {
         //cout << timeDate.data.yr << " year added" << endl;
@@ -96,11 +102,11 @@ void Event::selectByTimeOfDay(int length)
 void Event::calculateTotalAirConUse(Event* pevent, int* yr1, int* mn1, int* dy1, int* yr2, int* mn2, int* dy2, int length)
 {
     //cout << "length in calculate is " << length << endl;
-    
+    // Filter events
     static std::vector<Event*> airConEvents;
     if((*yr1 == *yr2) && (*mn1 == *mn2) && (*dy1 <= timeDate.data.day && timeDate.data.day <= *dy2))
     {
-        airConEvents.push_back(pevent);
+        airConEvents.push_back(pevent); // add events to vector "airConEvents"
         //cout << timeDate.data.day << " day added" << endl;
     }
     
@@ -117,12 +123,14 @@ void Event::calculateTotalAirConUse(Event* pevent, int* yr1, int* mn1, int* dy1,
     }
     
     if(length == 0)
+        // Enter condition once all events have been filtered
     {
         int totaltime = 0;
         //cout << "Vector size is " << airConEvents.size() << endl;
         for(int i = 0; i < airConEvents.size(); i++)
         {
            if(airConEvents[i]->eventCodes.codes.event_flag1 == 1 && airConEvents[i+1]->eventCodes.codes.event_flag1 == 3)
+               // if this event is a stop event and the previous event was a start event, calculate the time between them
             {
                 //calculate the time difference
                 struct tm t1, t2;
@@ -151,7 +159,7 @@ void Event::calculateTotalAirConUse(Event* pevent, int* yr1, int* mn1, int* dy1,
                 tt1 = mktime(&t1);
                 tt2 = mktime(&t2);
                 int time_difference = tt1 - tt2;
-                totaltime = totaltime + time_difference;
+                totaltime = totaltime + time_difference; // add calculated time difference to total time
                 //cout << "The total time is " << time_difference << endl;
                 int hour = time_difference/3600;
                 time_difference = time_difference%3600;
